@@ -10,7 +10,11 @@ import requests
 
 HISTORY_FILE = "ip_history.json"
 HISTORY_LIMIT = 200
-IP_API_URL = "http://ip-api.com/json/{ip}?fields=status,message,query,reverse,country,regionName,city,isp,as,org,zip,lat,lon,timezone,query"
+IP_API_URL = (
+    "http://ip-api.com/json/{ip}"
+    "?fields=status,message,query,reverse,country,regionName,"
+    "city,zip,lat,lon,timezone,isp,org,as"
+)
 
 class IPAnalyzer:
     """
@@ -55,6 +59,7 @@ class IPAnalyzer:
             url = IP_API_URL.format(ip=ip)
             resp = requests.get(url, timeout=self.timeout)
             data = resp.json()
+            print("DEBUG:", data)
             if data.get("status") != "success":
                 return {"error": data.get("message") or "Falha na API"}
             # normalizar campos
