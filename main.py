@@ -17,10 +17,6 @@ IP_API_URL = (
 )
 
 class IPAnalyzer:
-    """
-    Classe separada com a lógica de análise de IP/domain.
-    Usa ipaddress para validação e ip-api para geolocalização/ASN.
-    """
     def __init__(self, timeout=6):
         self.timeout = timeout
 
