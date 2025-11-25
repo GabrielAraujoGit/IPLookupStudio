@@ -1,0 +1,20 @@
+name: Verify Commit Signatures
+
+on:
+  pull_request:
+
+jobs:
+  check-signature:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verificar assinaturas dos commits
+        run: |
+          COMMITS=$(git rev-list origin/main..HEAD)
+          for c in $COMMITS; do
+            git verify-commit $c || { echo "Commit $c sem assinatura válida"; exit 1; }
+          done
+          echo "Todos os commits têm assinatura verificada."
