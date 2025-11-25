@@ -1,0 +1,5 @@
+requests
+dnspython
+pytest
+flake8
+black
