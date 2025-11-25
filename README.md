@@ -1,24 +1,66 @@
-# Verificador de IP
+# IP Analyzer
 
-Este é um programa simples em Python com interface gráfica construída com a biblioteca Tkinter. O programa tem como objetivo receber um endereço IP inserido pelo usuário e verificar sua classe (privado, público ou desconhecido), a máscara de sub-rede e o endereço de broadcast correspondentes.
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)]()
+[![License](https://img.shields.io/badge/License-MIT-green)]()
+[![Status](https://img.shields.io/badge/Status-Stable-success)]()
 
-O programa utiliza a biblioteca ipaddress para verificar se o IP inserido é válido e obter informações sobre a classe do IP, a máscara de sub-rede e o endereço de broadcast.
+Ferramenta desktop desenvolvida em Python e Tkinter para análise
+completa de IPs e hostnames, incluindo:
 
-## Pré-requisitos
+-   Validação de IP (IPv4 e IPv6)
+-   Resolução DNS (A/AAAA)
+-   DNS reverso
+-   Consulta ASN e Geolocalização via ip-api
+-   Identificação de propriedades do IP (privado, reservado, global,
+    classe)
+-   Histórico persistente em JSON
+-   Exportação do resultado em arquivo .txt
 
-Para executar o programa, é necessário ter o Python 3 instalado na máquina, bem como a biblioteca Tkinter, que geralmente já vem incluída na instalação padrão do Python.
+## Recursos Principais
 
-## Funcionamento do programa
+### 1. Validação de Entrada
 
-Ao abrir a interface gráfica do programa, o usuário verá um campo de entrada para inserir um endereço IP e um botão "Verificar". Ao clicar no botão "Verificar", o programa irá realizar as seguintes verificações:
+-   Verifica se o texto é um IP válido (IPv4/IPv6).
+-   Caso não seja IP, tenta resolver como hostname.
+-   Usa socket.getaddrinfo para DNS A/AAAA.
 
-1. Verificar se o IP inserido é válido utilizando a biblioteca ipaddress.
-2. Obter a classe do IP (privado, público ou desconhecido) utilizando a biblioteca ipaddress.
-3. Obter a máscara de sub-rede correspondente ao IP utilizando a biblioteca ipaddress.
-4. Obter o endereço de broadcast correspondente ao IP utilizando a biblioteca ipaddress.
+### 2. DNS Reverso
 
-Caso o IP inserido seja inválido, o programa exibirá uma mensagem de erro informando que o IP é inválido. Caso contrário, o programa exibirá as informações sobre a classe do IP, a máscara de sub-rede e o endereço de broadcast correspondentes ao IP inserido.
+-   Executado localmente via socket.gethostbyaddr.
+-   Retorna o PTR se disponível.
 
-## Considerações finais
+### 3. Geolocalização e ASN
 
-Este é um programa simples com interface gráfica construída com a biblioteca Tkinter em Python. Ele tem como objetivo mostrar como utilizar a biblioteca ipaddress para verificar informações sobre um endereço IP inserido pelo usuário. O código pode ser facilmente modificado para adicionar mais funcionalidades e melhorias na interface gráfica.
+Consulta realizada via:
+
+    http://ip-api.com/json/{ip}?fields=status,message,query,reverse,country,regionName,city,isp,as,org,zip,lat,lon,timezone,query
+
+Retorna: - País, região, cidade - Latitude/Longitude - Fuso horário -
+ISP e Organização - ASN - Reverse DNS retornado pela API
+
+### 4. Dados sobre o IP
+
+-   Versão IP (4 ou 6)
+-   Se é privado, reservado ou global
+-   Classe de IP (A/B/C) quando IPv4
+
+### 5. Histórico de Consultas
+
+-   Armazenado em JSON
+-   Limitado a 200 entradas
+-   Exportável para arquivo externo
+
+### 6. Interface Gráfica
+
+-   Tkinter + ttk
+-   Campo de entrada
+-   Área de resultado com rolagem
+-   Botões de consulta, limpar, exportar e histórico
+
+## Execução
+
+    python teste.py
+
+## Licença
+
+MIT License.
