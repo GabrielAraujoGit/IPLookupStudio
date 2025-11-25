@@ -16,6 +16,7 @@ IP_API_URL = (
     "city,zip,lat,lon,timezone,isp,org,as"
 )
 
+
 class IPAnalyzer:
     def __init__(self, timeout=6):
         self.timeout = timeout
