@@ -1,11 +1,3 @@
-# main.py
-"""
-Verificador de IP — UI moderna com ttkbootstrap (Discord-like / glassmorphism)
-Requisitos: requests, ttkbootstrap
-Rodar: pip install requests ttkbootstrap
-       python main.py
-Mantém: validação IP/hostname, reverse DNS, ip-api, histórico, export.
-"""
 
 import ipaddress
 import socket
@@ -48,9 +40,6 @@ FONT_UI = ("Arial", 10)
 FONT_TITLE = ("Arial", 12, "bold")
 FONT_MONO = ("Consolas", 10)
 
-# -------------------------
-# Lógica de análise (mesma funcionalidade)
-# -------------------------
 class IPAnalyzer:
     def __init__(self, timeout=6):
         self.timeout = timeout
@@ -105,30 +94,19 @@ class IPAnalyzer:
         except ValueError:
             return {"error": "Resposta inesperada da API"}
 
-
-# -------------------------
-# App UI com ttkbootstrap
-# -------------------------
 class App:
     def __init__(self, root: tb.Window):
         self.root = root
         self.root.title("Verificador de IP — DNS • ASN • Geolocalização")
         self.root.geometry("980x600")
         self.root.minsize(820, 520)
-
-        # estilo ttkbootstrap (usar um tema escuro como base)
         self.style = tb.Style(theme="darkly")  # base escura
-        # ajustar paleta personalizada
         self.customize_theme()
-
         self.analyzer = IPAnalyzer()
         self.ip_history = self.load_history()
-
         self.build_ui()
         self.bind_shortcuts()
-
     def customize_theme(self):
-        # Ajustes de cores para parecer Discord-like
         s = self.style
         try:
             s.configure("TFrame", background=BG)
@@ -140,83 +118,57 @@ class App:
             s.configure("Muted.TLabel", background=BG, foreground=MUTED, font=FONT_UI)
         except Exception:
             pass
-        # aplicar fundo da janela
         try:
             self.root.configure(background=BG)
         except Exception:
             pass
 
     def build_ui(self):
-        # Topbar
         topbar = tb.Frame(self.root, bootstyle="secondary", padding=(12, 10))
         topbar.pack(side=TOP, fill=X)
-
         left = tb.Frame(topbar, bootstyle="secondary")
         left.pack(side=LEFT, anchor="w")
-        # logo circular
-        
-
         tb.Label(left, text="Verificador de IP", bootstyle="inverse", style="Title.TLabel").pack(side=LEFT, padx=(10,6))
         tb.Label(left, text="DNS • ASN • Geolocalização", style="Muted.TLabel").pack(side=LEFT, padx=(4,0))
-
         right = tb.Frame(topbar, bootstyle="secondary")
         right.pack(side=RIGHT, anchor="e")
         self.btn_export_top = tb.Button(right, text="Exportar Resultado", bootstyle="outline", command=self.export_result)
         self.btn_history_top = tb.Button(right, text="Histórico", bootstyle="outline", command=self.show_history_window)
         self.btn_export_top.pack(side=RIGHT, padx=6)
         self.btn_history_top.pack(side=RIGHT, padx=6)
-
-        # Main content
         content = tb.Frame(self.root, padding=12)
         content.pack(fill=BOTH, expand=YES)
-
-        # Left panel (form)
         left_panel = tb.Frame(content, width=340, bootstyle="Card.TFrame", padding=12)
         left_panel.pack(side=LEFT, fill=Y, padx=(0,12))
         left_panel.pack_propagate(False)
-
         tb.Separator(left_panel, orient="horizontal").pack(fill=X, pady=(0,8))
-
         tb.Label(left_panel, text="IP ou Hostname:", style="TLabel").pack(anchor="w", pady=(4,6))
         self.entry_ip = tb.Entry(left_panel, width=28)
         self.entry_ip.pack(fill=X)
         self.entry_ip.configure(font=FONT_UI)
-
-        # Buttons
         btn_frame = tb.Frame(left_panel)
         btn_frame.pack(fill=X, pady=(12,6))
-
         self.btn_check = tb.Button(btn_frame, text="Verificar", bootstyle=(PRIMARY+"-outline"), command=self.on_check)
         self.btn_clear = tb.Button(btn_frame, text="Limpar", bootstyle="secondary-outline", command=self.on_clear)
         self.btn_check.pack(side=LEFT, fill=X, expand=YES, padx=(0,6))
         self.btn_clear.pack(side=LEFT)
-
         tb.Label(left_panel, text="Entrada aceita: IPv4/IPv6 ou hostname", style="Muted.TLabel").pack(anchor="w", pady=(10,0))
-
-        # Right panel (result)
         right_panel = tb.Frame(content, bootstyle="Card.TFrame", padding=8)
         right_panel.pack(side=LEFT, fill=BOTH, expand=YES)
-
         header = tb.Frame(right_panel)
         header.pack(fill=X)
         tb.Label(header, text="Resultado", style="Title.TLabel").pack(side=LEFT)
         self.lbl_status = tb.Label(header, text="Pronto", style="Muted.TLabel")
         self.lbl_status.pack(side=RIGHT)
-
-        # ScrolledText com estilo
         self.txt_result = ScrolledText(right_panel, wrap="word", height=18, bg="#0b0c0d", fg=TEXT, insertbackground=TEXT)
         self.txt_result.configure(font=FONT_MONO, bd=0)
         self.txt_result.pack(fill=BOTH, expand=YES, pady=(8,6))
-
-        # Actions beneath the result
         actions = tb.Frame(right_panel)
         actions.pack(fill=X, pady=(4,4))
         self.btn_copy = tb.Button(actions, text="Copiar", bootstyle="secondary", command=self.copy_result)
         self.btn_save = tb.Button(actions, text="Salvar Resultado...", bootstyle="primary", command=self.export_result)
         self.btn_copy.pack(side=LEFT)
         self.btn_save.pack(side=RIGHT)
-
-        # Footer status
         footer = tb.Frame(self.root, padding=(12,6))
         footer.pack(side=BOTTOM, fill=X)
         self.status_var = tk.StringVar(value="Pronto")
@@ -224,13 +176,8 @@ class App:
         tb.Label(footer, text="I.P.A", style="Muted.TLabel").pack(side=RIGHT)
 
     def bind_shortcuts(self):
-        # Enter to verify, Ctrl+S to save
         self.root.bind("<Return>", lambda e: self.on_check())
         self.root.bind("<Control-s>", lambda e: self.export_result())
-
-    # -------------------------
-    # Helpers UI
-    # -------------------------
     def set_status(self, msg):
         self.status_var.set(msg)
         try:
@@ -245,10 +192,6 @@ class App:
         self.txt_result.insert("end", text + "\n")
         self.txt_result.see("end")
         self.txt_result.configure(state="disabled")
-
-    # -------------------------
-    # Ações
-    # -------------------------
     def on_clear(self):
         self.txt_result.configure(state="normal")
         self.txt_result.delete("1.0", "end")
@@ -346,10 +289,6 @@ class App:
             self.btn_check.configure(state="normal")
         except Exception:
             pass
-
-    # -------------------------
-    # Histórico
-    # -------------------------
     def record_history(self, entry):
         try:
             self.ip_history.append(entry)
@@ -384,14 +323,11 @@ class App:
 
         frame = tb.Frame(win, padding=12)
         frame.pack(fill=BOTH, expand=YES)
-
-        # Lista com scrollbar
         listbox = tk.Listbox(frame, bg="#0b0c0d", fg=TEXT, bd=0, highlightthickness=0, font=FONT_UI)
         listbox.pack(side=LEFT, fill=BOTH, expand=YES)
         scrollbar = tb.Scrollbar(frame, orient="vertical", command=listbox.yview)
         scrollbar.pack(side=RIGHT, fill=Y)
         listbox.config(yscrollcommand=scrollbar.set)
-
         for idx, it in enumerate(reversed(self.ip_history)):
             ts = it.get("time", "")
             txt = f"{idx+1:03d} — {it.get('input')} → {it.get('resolved')}  [{ts}]"
@@ -413,10 +349,6 @@ class App:
             messagebox.showinfo("Exportar", f"Histórico salvo em {path}")
         except Exception as e:
             messagebox.showerror("Erro", f"Falha ao salvar histórico: {e}")
-
-    # -------------------------
-    # Export / copiar
-    # -------------------------
     def export_result(self):
         txt = self.txt_result.get("1.0", "end").strip()
         if not txt:
@@ -441,13 +373,8 @@ class App:
         self.root.clipboard_clear()
         self.root.clipboard_append(txt)
         messagebox.showinfo("Copiar", "Resultado copiado para a área de transferência.")
-
-# -------------------------
-# Entrypoint
-# -------------------------
 def main():
     app_root = tb.Window(title="Verificador de IP — DNS • ASN • Geolocalização", themename="darkly")
-    # garantir que o diretório atual seja o script path (para histórico relativo)
     try:
         os.chdir(os.path.dirname(os.path.abspath(__file__)))
     except Exception:
