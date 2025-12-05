@@ -1,5 +1,3 @@
-
-
 import ipaddress
 import socket
 import threading
@@ -15,16 +13,12 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from tkinter.scrolledtext import ScrolledText
 
-
 HISTORY_FILE = "ip_history.json"
 CONFIG_FILE = "config.json"
 HISTORY_LIMIT = 500
-
 IP_API_URL = "http://ip-api.com/json/{ip}?fields=status,message,query,reverse,country,regionName,city,zip,lat,lon,timezone,isp,org,as"
-
 RDAP_URL = "https://rdap.org/ip/{ip}"
 BGPVIEW_URL = "https://api.bgpview.io/ip/{ip}"
-
 IPINFO_URL = "https://ipinfo.io/{ip}/json"
 ABUSEIPDB_URL = "https://api.abuseipdb.com/api/v2/check"
 IPQS_URL = "https://ipqualityscore.com/api/json/ip/{api_key}/{ip}"
@@ -39,9 +33,6 @@ FONT_UI = ("Arial", 10)
 FONT_TITLE = ("Arial", 12, "bold")
 FONT_MONO = ("Consolas", 10)
 
-# -------------------------
-# Helper: load/save config
-# -------------------------
 def load_config():
     default = {
         "IPINFO_TOKEN": "",
