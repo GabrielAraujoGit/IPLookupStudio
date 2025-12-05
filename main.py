@@ -202,7 +202,7 @@ def query_ipdata(ip, api_key, timeout=8):
 class App:
     def __init__(self, root: tb.Window):
         self.root = root
-        self.root.title("Verificador de IP — Avançado")
+        self.root.title("IPLookup Studio")
         self.root.geometry("1100x680")
         self.root.minsize(900, 620)
 
@@ -233,7 +233,7 @@ class App:
         logo.create_oval(6,6,34,34, fill=PRIMARY, outline="")
         logo.create_text(20,20, text="IP", fill="white", font=("Arial", 10, "bold"))
         logo.pack(side=tk.LEFT)
-        tb.Label(left, text="Verificador de IP (Avançado)", style="Title.TLabel").pack(side=tk.LEFT, padx=(8,6))
+        tb.Label(left, text="IPLookup Studio", style="Title.TLabel").pack(side=tk.LEFT, padx=(8,6))
         tb.Label(left, text="DNS • ASN • Geolocalização • Segurança • WHOIS • BGP", style="Muted.TLabel").pack(side=tk.LEFT)
 
         right = tb.Frame(topbar)
