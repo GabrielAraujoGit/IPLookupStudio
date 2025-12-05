@@ -1,8 +1,10 @@
 # IPLookup Studio
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)]()
-[![License](https://img.shields.io/badge/License-MIT-green)]()
-[![Status](https://img.shields.io/badge/Status-Stable-success)]()
+![Python](https://img.shields.io/badge/Python-3.8%2B-0D1117?style=flat&logo=python&logoColor=3776AB)
+![License](https://img.shields.io/badge/License-MIT-0D1117?style=flat&logo=open-source-initiative&logoColor=00CC33)
+![Status](https://img.shields.io/badge/Status-Stable-0D1117?style=flat&logo=checkmarx&logoColor=00FF66)
+
+
 
 Ferramenta desktop desenvolvida em Python e Tkinter para análise
 completa de IPs e hostnames, incluindo:
