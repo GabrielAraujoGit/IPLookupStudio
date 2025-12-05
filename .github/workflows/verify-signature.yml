@@ -1,4 +1,6 @@
 name: Verify Commit Signatures
+permissions:
+  contents: read
 
 on:
   pull_request:
