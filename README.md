@@ -65,5 +65,6 @@ ISP e Organização - ASN - Reverse DNS retornado pela API
 
 ## Licença
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-0D1117?style=flat&logo=open-source-initiative&logoColor=00E676)](LICENSE)
+
 
