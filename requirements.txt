@@ -2,4 +2,4 @@ requests
 dnspython
 pytest
 flake8
-black
+black>=26.3.1
